@@ -1,11 +1,16 @@
 import { Product, Category, SpecialOffer, BusinessSettings } from '../types';
+import shahSweetsLogo from '../assets/images/shah_sweets_logo_1792472729789.jpg';
+import heroSweetsBanner from '../assets/images/hero_sweets_banner_1792472731048.jpg';
+import categoryMithai from '../assets/images/category_mithai_1792472732632.jpg';
+import categoryCakes from '../assets/images/category_cakes_1792472733255.jpg';
+import categoryBakery from '../assets/images/category_bakery_1792472733007.jpg';
 
 export const BRAND_ASSETS = {
-  logo: '/src/assets/images/shah_sweets_logo_1792472729789.jpg',
-  heroBanner: '/src/assets/images/hero_sweets_banner_1792472731048.jpg',
-  categoryMithai: '/src/assets/images/category_mithai_1792472732632.jpg',
-  categoryCakes: '/src/assets/images/category_cakes_1792472733255.jpg',
-  categoryBakery: '/src/assets/images/category_bakery_1792472733007.jpg',
+  logo: shahSweetsLogo,
+  heroBanner: heroSweetsBanner,
+  categoryMithai: categoryMithai,
+  categoryCakes: categoryCakes,
+  categoryBakery: categoryBakery,
 };
 
 export const INITIAL_SETTINGS: BusinessSettings = {

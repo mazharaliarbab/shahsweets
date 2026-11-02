@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '../context/StoreContext';
 import { WeightVariant } from '../types';
+import { BRAND_ASSETS } from '../data/initialData';
 import { ArrowLeft, MessageCircle, Sparkles, CheckCircle2, XCircle, Clock, Plus, Minus, MapPin } from 'lucide-react';
 
 export const ProductDetailModal: React.FC = () => {
@@ -89,11 +90,11 @@ export const ProductDetailModal: React.FC = () => {
           {/* Product Image */}
           <div className="relative aspect-video sm:aspect-square md:aspect-auto md:h-full bg-[#120407] min-h-[260px] sm:min-h-[320px] overflow-hidden flex items-center justify-center">
             <img
-              src={product.image || '/src/assets/images/category_mithai_1792472732632.jpg'}
+              src={product.image || BRAND_ASSETS.categoryMithai}
               alt={product.name}
               onError={(e) => {
                 e.currentTarget.onerror = null;
-                e.currentTarget.src = '/src/assets/images/category_mithai_1792472732632.jpg';
+                e.currentTarget.src = BRAND_ASSETS.categoryMithai;
               }}
               className="w-full h-full object-cover"
               referrerPolicy="no-referrer"

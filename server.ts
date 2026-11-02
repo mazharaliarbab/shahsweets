@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI } from '@google/genai';
-import { INITIAL_PRODUCTS, INITIAL_SETTINGS } from './src/data/initialData';
+import { RAW_CATALOG_PRODUCTS as INITIAL_PRODUCTS, STORE_SETTINGS as INITIAL_SETTINGS } from './src/data/catalogData';
 
 dotenv.config();
 

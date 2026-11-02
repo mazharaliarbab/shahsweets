@@ -65,6 +65,16 @@ interface StoreContextType {
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
+const normalizeAssetUrl = (url?: string): string => {
+  if (!url) return BRAND_ASSETS.categoryMithai;
+  if (url.includes('category_mithai')) return BRAND_ASSETS.categoryMithai;
+  if (url.includes('category_cakes')) return BRAND_ASSETS.categoryCakes;
+  if (url.includes('category_bakery')) return BRAND_ASSETS.categoryBakery;
+  if (url.includes('hero_sweets_banner')) return BRAND_ASSETS.heroBanner;
+  if (url.includes('shah_sweets_logo')) return BRAND_ASSETS.logo;
+  return url;
+};
+
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [products, setProducts] = useState<Product[]>(() => {
     try {
@@ -75,7 +85,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           return parsed.map((p: any) => ({
             ...p,
             price: Number(p.price) || 0,
-            image: p.image || BRAND_ASSETS.categoryMithai,
+            image: normalizeAssetUrl(p.image),
             variants: Array.isArray(p.variants) ? p.variants : [],
             hasVariants: Boolean(p.hasVariants),
             availability: p.availability || 'in_stock',
@@ -91,7 +101,16 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [categories, setCategories] = useState<Category[]>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
-      return saved ? JSON.parse(saved) : INITIAL_CATEGORIES;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.map((c: any) => ({
+            ...c,
+            image: normalizeAssetUrl(c.image),
+          }));
+        }
+      }
+      return INITIAL_CATEGORIES;
     } catch {
       return INITIAL_CATEGORIES;
     }
@@ -336,7 +355,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       ...newProd,
       id,
       price: Number(newProd.price) || 0,
-      image: newProd.image?.trim() || BRAND_ASSETS.categoryMithai,
+      image: normalizeAssetUrl(newProd.image?.trim()),
       variants: Array.isArray(newProd.variants) ? newProd.variants : [],
       hasVariants: Boolean(newProd.hasVariants && newProd.variants && newProd.variants.length > 0),
       availability: newProd.availability || 'in_stock',

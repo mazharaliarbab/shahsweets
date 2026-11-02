@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Product, WeightVariant } from '../types';
 import { useStore } from '../context/StoreContext';
+import { BRAND_ASSETS } from '../data/initialData';
 import { MessageCircle, Sparkles, CheckCircle2, XCircle, Clock } from 'lucide-react';
 
 interface ProductCardProps {
@@ -62,11 +63,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       {/* Small Product Thumbnail on Left */}
       <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-lg overflow-hidden shrink-0 bg-[#120407] border border-[#c99846]/30 shadow-inner flex items-center justify-center">
         <img
-          src={product.image || '/src/assets/images/category_mithai_1792472732632.jpg'}
+          src={product.image || BRAND_ASSETS.categoryMithai}
           alt={product.name}
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = '/src/assets/images/category_mithai_1792472732632.jpg';
+            e.currentTarget.src = BRAND_ASSETS.categoryMithai;
           }}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           referrerPolicy="no-referrer"
