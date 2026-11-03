@@ -186,6 +186,19 @@ app.post('/api/ai/chat', async (req, res) => {
   }
 });
 
+// Explicit SEO endpoints: sitemap.xml & robots.txt
+app.get('/sitemap.xml', (_req, res) => {
+  const sitemapFile = path.resolve(__dirname, 'public', 'sitemap.xml');
+  res.type('application/xml; charset=UTF-8');
+  res.sendFile(sitemapFile);
+});
+
+app.get('/robots.txt', (_req, res) => {
+  const robotsFile = path.resolve(__dirname, 'public', 'robots.txt');
+  res.type('text/plain; charset=UTF-8');
+  res.sendFile(robotsFile);
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', service: 'Shah Sweets and Bakers Server' });
