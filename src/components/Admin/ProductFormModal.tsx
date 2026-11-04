@@ -310,7 +310,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                     setGeneralError('');
                   }
                 }}
-                placeholder="e.g. Pistachio Khoya Barfi"
+                placeholder="e.g. Almond Biscuit or Mix Mathai"
                 className={`w-full bg-[#240810] border rounded-xl px-3.5 py-2.5 text-xs text-[#fdfaf4] focus:outline-none transition-colors ${
                   fieldErrors.name
                     ? 'border-rose-500 focus:border-rose-400 ring-1 ring-rose-500/40'

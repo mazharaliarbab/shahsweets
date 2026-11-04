@@ -3,11 +3,41 @@ import { Product, Category, SpecialOffer, BusinessSettings } from '../types';
 import { INITIAL_PRODUCTS, INITIAL_CATEGORIES, INITIAL_OFFERS, INITIAL_SETTINGS, BRAND_ASSETS } from '../data/initialData';
 
 const STORAGE_KEYS = {
-  PRODUCTS: 'shah_sweets_products_v1',
+  PRODUCTS: 'shah_sweets_products_v2',
   CATEGORIES: 'shah_sweets_categories_v1',
   OFFERS: 'shah_sweets_offers_v1',
   SETTINGS: 'shah_sweets_settings_v1',
   AUTH: 'shah_sweets_admin_auth_v1',
+};
+
+const OLD_PRODUCT_IDS = new Set([
+  'prod-gulab-jamun',
+  'prod-pistachio-barfi',
+  'prod-cham-cham',
+  'prod-gold-celebration-cake',
+  'prod-chocolate-fudge-cake',
+  'prod-nan-khatai',
+  'prod-puff-patties',
+  'prod-tea-rusks',
+]);
+
+const isOldProduct = (p: Product | { id?: string; name?: string }): boolean => {
+  if (p.id && OLD_PRODUCT_IDS.has(p.id)) return true;
+  const n = (p.name || '').toLowerCase();
+  if (
+    n.includes('gulab jamun') ||
+    n.includes('pistachio barfi') ||
+    n.includes('cham cham') ||
+    n.includes('celebration cake') ||
+    n.includes('fudge cake') ||
+    n.includes('nan khatai') ||
+    n.includes('puff patties') ||
+    n.includes('tea rusks') ||
+    n.includes('saffron & pistachio')
+  ) {
+    return true;
+  }
+  return false;
 };
 
 interface StoreContextType {
@@ -85,11 +115,12 @@ const normalizeNameForMatching = (name: string): string => {
     .trim();
 };
 
-// Duplicate-safe merger: adds only products that do not already exist in the database
+// Duplicate-safe merger: adds only products that do not already exist in the database and filters old products
 const mergeProductsWithDefaults = (existingList: Product[], canonicalList: Product[]): Product[] => {
-  const result: Product[] = [...existingList];
+  const result: Product[] = existingList.filter((p) => !isOldProduct(p));
   
   for (const canonical of canonicalList) {
+    if (isOldProduct(canonical)) continue;
     const canonicalKey = normalizeNameForMatching(canonical.name);
     const alreadyExists = result.some((p) => {
       if (p.id === canonical.id) return true;
@@ -122,18 +153,23 @@ const mergeCategoriesWithDefaults = (existingList: Category[], canonicalList: Ca
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [products, setProducts] = useState<Product[]>(() => {
     try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.removeItem('shah_sweets_products_v1');
+      }
       const saved = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          const mapped = parsed.map((p: any) => ({
-            ...p,
-            price: Number(p.price) || 0,
-            image: normalizeAssetUrl(p.image),
-            variants: Array.isArray(p.variants) ? p.variants : [],
-            hasVariants: Boolean(p.hasVariants),
-            availability: p.availability || 'in_stock',
-          }));
+          const mapped = parsed
+            .filter((p: any) => !isOldProduct(p))
+            .map((p: any) => ({
+              ...p,
+              price: Number(p.price) || 0,
+              image: normalizeAssetUrl(p.image),
+              variants: Array.isArray(p.variants) ? p.variants : [],
+              hasVariants: Boolean(p.hasVariants),
+              availability: p.availability || 'in_stock',
+            }));
           return mergeProductsWithDefaults(mapped, INITIAL_PRODUCTS);
         }
       }

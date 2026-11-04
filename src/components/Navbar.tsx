@@ -61,8 +61,8 @@ const NAVIGATION_ITEMS: NavCategoryItem[] = [
     subcategories: [
       { id: 'pastries', label: 'Pastries', category: 'Cakes & Pastries', query: 'Pastry' },
       { id: 'cupcakes', label: 'Cupcakes', category: 'Cakes & Pastries', query: 'Cupcake' },
-      { id: 'cookies', label: 'Cookies', category: 'Fresh Bakery & Savories', query: 'Nan Khatai' },
-      { id: 'biscuits', label: 'Biscuits', category: 'Fresh Bakery & Savories', query: 'Rusk' },
+      { id: 'cookies', label: 'Dry Fruit Biscuits', category: 'Fresh Bakery & Savories', query: 'Biscuit' },
+      { id: 'biscuits', label: 'Biscuits', category: 'Fresh Bakery & Savories', query: 'Biscuit' },
     ],
   },
   {
@@ -528,7 +528,7 @@ export const Navbar: React.FC = () => {
               {/* Quick Suggestion Pills */}
               <div className="flex items-center gap-1.5 flex-wrap pt-3 text-[11px] text-[#f8f1e3]/70">
                 <span className="text-[#c99846] font-semibold">Popular:</span>
-                {['Cake', 'Gulab Jamun', 'Barfi', 'Nan Khatai', 'Patties', 'Chocolate'].map((term) => (
+                {['Cake', 'Biscuit', 'Mix Mathai', 'Almond Biscuit', 'Pastry', 'Chocolate'].map((term) => (
                   <button
                     key={term}
                     type="button"
