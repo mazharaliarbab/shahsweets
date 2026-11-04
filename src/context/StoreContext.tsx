@@ -61,6 +61,7 @@ interface StoreContextType {
   };
   canGoBack: boolean;
   goBack: () => void;
+  syncRequestedProducts: () => { addedCount: number; existingCount: number };
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -75,6 +76,49 @@ const normalizeAssetUrl = (url?: string): string => {
   return url;
 };
 
+// Normalize names for fuzzy duplicate detection (stripping Urdu in parenthesis and punctuation)
+const normalizeNameForMatching = (name: string): string => {
+  return name
+    .toLowerCase()
+    .replace(/\(.*?\)/g, '')
+    .replace(/[^a-z0-9]/g, '')
+    .trim();
+};
+
+// Duplicate-safe merger: adds only products that do not already exist in the database
+const mergeProductsWithDefaults = (existingList: Product[], canonicalList: Product[]): Product[] => {
+  const result: Product[] = [...existingList];
+  
+  for (const canonical of canonicalList) {
+    const canonicalKey = normalizeNameForMatching(canonical.name);
+    const alreadyExists = result.some((p) => {
+      if (p.id === canonical.id) return true;
+      const existingKey = normalizeNameForMatching(p.name);
+      return existingKey === canonicalKey || (canonicalKey.length >= 5 && existingKey.includes(canonicalKey));
+    });
+
+    if (!alreadyExists) {
+      result.push(canonical);
+    }
+  }
+
+  return result;
+};
+
+// Category merger: ensures all required categories exist without removing or altering others
+const mergeCategoriesWithDefaults = (existingList: Category[], canonicalList: Category[]): Category[] => {
+  const result: Category[] = [...existingList];
+  for (const canonical of canonicalList) {
+    const exists = result.some(
+      (c) => c.id === canonical.id || c.name.toLowerCase() === canonical.name.toLowerCase()
+    );
+    if (!exists) {
+      result.push(canonical);
+    }
+  }
+  return result;
+};
+
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [products, setProducts] = useState<Product[]>(() => {
     try {
@@ -82,7 +126,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.map((p: any) => ({
+          const mapped = parsed.map((p: any) => ({
             ...p,
             price: Number(p.price) || 0,
             image: normalizeAssetUrl(p.image),
@@ -90,6 +134,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             hasVariants: Boolean(p.hasVariants),
             availability: p.availability || 'in_stock',
           }));
+          return mergeProductsWithDefaults(mapped, INITIAL_PRODUCTS);
         }
       }
       return INITIAL_PRODUCTS;
@@ -104,10 +149,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
-          return parsed.map((c: any) => ({
+          const mapped = parsed.map((c: any) => ({
             ...c,
             image: normalizeAssetUrl(c.image),
           }));
+          return mergeCategoriesWithDefaults(mapped, INITIAL_CATEGORIES);
         }
       }
       return INITIAL_CATEGORIES;
@@ -506,6 +552,17 @@ Thank you!`;
     };
   };
 
+  const syncRequestedProducts = () => {
+    let addedCount = 0;
+    setProducts((current) => {
+      const merged = mergeProductsWithDefaults(current, INITIAL_PRODUCTS);
+      addedCount = merged.length - current.length;
+      return merged;
+    });
+    setCategories((current) => mergeCategoriesWithDefaults(current, INITIAL_CATEGORIES));
+    return { addedCount, existingCount: products.length };
+  };
+
   return (
     <StoreContext.Provider
       value={{
@@ -542,6 +599,7 @@ Thank you!`;
         createWhatsAppLink,
         canGoBack,
         goBack,
+        syncRequestedProducts,
       }}
     >
       {children}

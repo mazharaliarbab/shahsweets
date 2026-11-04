@@ -41,6 +41,7 @@ export const AdminDashboard: React.FC = () => {
     setActiveNav,
     deleteProduct,
     goBack,
+    syncRequestedProducts,
   } = useStore();
 
   const [currentTab, setCurrentTab] = useState<AdminTab>('products');
@@ -71,6 +72,15 @@ export const AdminDashboard: React.FC = () => {
 
   const inStockCount = products.filter((p) => p.availability === 'in_stock').length;
   const featuredCount = products.filter((p) => p.isFeatured).length;
+
+  const handleSyncProducts = () => {
+    const res = syncRequestedProducts();
+    if (res.addedCount > 0) {
+      showToast(`Added ${res.addedCount} requested products to database!`);
+    } else {
+      showToast(`All requested products are up-to-date (0 duplicates created).`);
+    }
+  };
 
   const handleDeleteConfirm = () => {
     if (productToDelete) {
@@ -322,16 +332,27 @@ export const AdminDashboard: React.FC = () => {
                 </p>
               </div>
 
-              <button
-                onClick={() => {
-                  setEditingProduct(null);
-                  setIsProductModalOpen(true);
-                }}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c99846] to-[#a8792c] hover:brightness-110 text-[#140508] font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl shadow-xl transition-all cursor-pointer"
-              >
-                <Plus className="w-4 h-4" />
-                <span>Add Product</span>
-              </button>
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <button
+                  onClick={handleSyncProducts}
+                  className="inline-flex items-center gap-2 bg-[#280911] hover:bg-[#3d0e19] text-[#e8c86a] border border-[#c99846]/40 font-bold text-xs uppercase tracking-wider px-4 py-3 rounded-xl shadow transition-all cursor-pointer"
+                  title="Verify or re-sync requested products without duplicates"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#e8c86a]" />
+                  <span>Sync Database</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setEditingProduct(null);
+                    setIsProductModalOpen(true);
+                  }}
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-[#c99846] to-[#a8792c] hover:brightness-110 text-[#140508] font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl shadow-xl transition-all cursor-pointer"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>Add Product</span>
+                </button>
+              </div>
             </div>
 
             {/* Search & Category Filter Toolbar */}
