@@ -39,6 +39,7 @@ export const Hero: React.FC = () => {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#fdfaf4] leading-[1.15]"
             >
+              <span className="sr-only">Shah Sweets and Bakers - </span>
               <span className="block font-serif-brand italic font-normal text-[#e8c86a]">
                 Taste the Tradition,
               </span>
