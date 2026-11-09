@@ -147,24 +147,19 @@ export const ProductCatalogue: React.FC = () => {
           </div>
         </div>
 
-        {/* Product Cards Grid - Animation 3: Staggered entrance effect */}
+        {/* Product Cards Grid - Modern 4-column horizontal layout on desktop, 2 on tablet, 1-2 on mobile */}
         {sortedProducts.length > 0 ? (
-          <div
-            className={
-              sortedProducts.length === 1
-                ? 'grid grid-cols-1 max-w-2xl mx-auto gap-3.5 sm:gap-4'
-                : 'grid grid-cols-1 lg:grid-cols-2 gap-3.5 sm:gap-4'
-            }
-          >
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             {sortedProducts.map((product, index) => (
               <motion.div
                 key={product.id}
+                className="h-full flex flex-col"
                 initial={{ opacity: 0, y: 22 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.12 }}
                 transition={{
-                  duration: 0.5,
-                  delay: Math.min((index % 6) * 0.08, 0.45),
+                  duration: 0.45,
+                  delay: Math.min((index % 4) * 0.08, 0.35),
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >

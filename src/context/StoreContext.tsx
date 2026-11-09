@@ -3,7 +3,7 @@ import { Product, Category, SpecialOffer, BusinessSettings } from '../types';
 import { INITIAL_PRODUCTS, INITIAL_CATEGORIES, INITIAL_OFFERS, INITIAL_SETTINGS, BRAND_ASSETS } from '../data/initialData';
 
 const STORAGE_KEYS = {
-  PRODUCTS: 'shah_sweets_products_v2',
+  PRODUCTS: 'shah_sweets_products_v3',
   CATEGORIES: 'shah_sweets_categories_v1',
   OFFERS: 'shah_sweets_offers_v1',
   SETTINGS: 'shah_sweets_settings_v1',
@@ -98,6 +98,7 @@ const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 const normalizeAssetUrl = (url?: string): string => {
   if (!url) return BRAND_ASSETS.categoryMithai;
+  if (url.startsWith('/assets/products/')) return url;
   if (url.includes('category_mithai')) return BRAND_ASSETS.categoryMithai;
   if (url.includes('category_cakes')) return BRAND_ASSETS.categoryCakes;
   if (url.includes('category_bakery')) return BRAND_ASSETS.categoryBakery;
@@ -122,14 +123,26 @@ const mergeProductsWithDefaults = (existingList: Product[], canonicalList: Produ
   for (const canonical of canonicalList) {
     if (isOldProduct(canonical)) continue;
     const canonicalKey = normalizeNameForMatching(canonical.name);
-    const alreadyExists = result.some((p) => {
+    const existingIndex = result.findIndex((p) => {
       if (p.id === canonical.id) return true;
       const existingKey = normalizeNameForMatching(p.name);
       return existingKey === canonicalKey || (canonicalKey.length >= 5 && existingKey.includes(canonicalKey));
     });
 
-    if (!alreadyExists) {
+    if (existingIndex === -1) {
       result.push(canonical);
+    } else {
+      // If product has old generic category image or missing image, upgrade to its specific image
+      const cur = result[existingIndex];
+      if (
+        !cur.image ||
+        cur.image.includes('category_') ||
+        cur.image === BRAND_ASSETS.categoryBakery ||
+        cur.image === BRAND_ASSETS.categoryCakes ||
+        cur.image === BRAND_ASSETS.categoryMithai
+      ) {
+        result[existingIndex] = { ...cur, image: canonical.image };
+      }
     }
   }
 
@@ -155,6 +168,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     try {
       if (typeof window !== 'undefined' && window.localStorage) {
         window.localStorage.removeItem('shah_sweets_products_v1');
+        window.localStorage.removeItem('shah_sweets_products_v2');
       }
       const saved = localStorage.getItem(STORAGE_KEYS.PRODUCTS);
       if (saved) {
