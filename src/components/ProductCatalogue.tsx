@@ -63,7 +63,7 @@ export const ProductCatalogue: React.FC = () => {
         </div>
 
         {/* Filter Controls Bar */}
-        <div className="bg-[#17060a] border border-[#c99846]/25 rounded-2xl p-4 sm:p-5 shadow-xl space-y-4">
+        <div className="max-w-5xl mx-auto w-full bg-[#17060a] border border-[#c99846]/25 rounded-2xl p-4 sm:p-5 shadow-xl space-y-4">
           {/* Top row: Categories pills */}
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
             <button
@@ -147,9 +147,9 @@ export const ProductCatalogue: React.FC = () => {
           </div>
         </div>
 
-        {/* Product Cards Grid - Modern 4-column horizontal layout on desktop, 2 on tablet, 1-2 on mobile */}
+        {/* Product Cards Grid - Exactly 2 columns on desktop/landscape & tablet, 1 column on mobile portrait */}
         {sortedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 max-w-5xl mx-auto">
             {sortedProducts.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -159,7 +159,7 @@ export const ProductCatalogue: React.FC = () => {
                 viewport={{ once: true, amount: 0.12 }}
                 transition={{
                   duration: 0.45,
-                  delay: Math.min((index % 4) * 0.08, 0.35),
+                  delay: Math.min((index % 2) * 0.08, 0.35),
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >

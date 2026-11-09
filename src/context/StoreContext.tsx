@@ -560,7 +560,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     customMessage?: string
   ) => {
     // Exact business WhatsApp number with country code, without +, spaces, brackets, or hyphens
-    const rawNumber = settings.whatsAppNumber || '+92 305 9898409';
+    const rawNumber = settings.whatsAppNumber || '03059898409';
     let digits = rawNumber.replace(/[^0-9]/g, '');
     if (digits.startsWith('0092')) {
       digits = digits.slice(2);
@@ -569,29 +569,33 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
     const cleanNumber = (digits && digits.length >= 10) ? digits : '923059898409';
 
-    let rawMessage = customMessage || `Assalam-o-Alaikum Shah Sweets and Bakers,
-I would like to inquire about your sweets and bakery products in Shabqadar.`;
+    let rawMessage = customMessage || '';
 
     if (product) {
-      const selectedVariantText = variantLabel ? `Variant: ${variantLabel}` : `Standard item`;
+      // Clean English product name: remove Urdu script in parentheses if present (e.g. "Fruit Cake (فروٹ کیک)" -> "Fruit Cake")
+      const cleanName = product.name.replace(/\s*\([\u0600-\u06FF\s/—\-]+\)$/g, '').trim() || product.name.trim();
+
+      // Determine selected weight, portion, or quantity option
+      const weightText =
+        variantLabel ||
+        (product.hasVariants && product.variants && product.variants.length > 0
+          ? product.variants[0].label
+          : 'Standard');
+
       const singlePrice = variantPrice !== undefined ? variantPrice : product.price;
-      const totalCost = singlePrice * quantity;
+      const totalCost = singlePrice * (quantity || 1);
 
-      rawMessage = `Assalam-o-Alaikum Shah Sweets and Bakers,
-I would like to place an order from your website:
-
-• Item: ${product.name}
-• ${selectedVariantText}
-• Quantity: ${quantity}
-• Unit Price: PKR ${singlePrice.toLocaleString()}
-• Total Amount: PKR ${totalCost.toLocaleString()}
-
-Please confirm availability and pickup/delivery details for Shabqadar.
-Thank you!`;
+      // Direct, clean WhatsApp format requested:
+      // Product: [Selected Product Name]
+      // Weight: [Selected Weight / Portion]
+      // Price: PKR [Total Calculated Price]
+      rawMessage = `Product: ${cleanName}\nWeight: ${weightText}\nPrice: PKR ${totalCost.toLocaleString()}`;
     }
 
     const encodedMessage = encodeURIComponent(rawMessage.trim());
-    const url = `https://wa.me/${cleanNumber}?text=${encodedMessage}`;
+    const url = rawMessage.trim()
+      ? `https://wa.me/${cleanNumber}?text=${encodedMessage}`
+      : `https://wa.me/${cleanNumber}`;
 
     return {
       isConfigured: true,

@@ -87,7 +87,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       className="group relative flex flex-col h-full rounded-2xl bg-[#17060a] hover:bg-[#1e080f] border border-[#c99846]/25 hover:border-[#c99846]/75 shadow-lg hover:shadow-2xl hover:shadow-[#c99846]/15 transition-all duration-300 ease-out transform hover:-translate-y-1.5 active:scale-[0.99] overflow-hidden cursor-pointer select-none"
     >
       {/* Product Image Section */}
-      <div className="relative w-full aspect-[4/3] overflow-hidden bg-[#120407] border-b border-[#c99846]/20">
+      <div className="relative w-full h-44 sm:h-48 md:h-52 overflow-hidden bg-[#120407] border-b border-[#c99846]/20 shrink-0">
         <img
           src={product.image || getCategoryFallback()}
           alt={english}
@@ -120,9 +120,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       {/* Card Body Content */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3.5">
+      <div className="p-3.5 sm:p-4 flex-1 flex flex-col justify-between space-y-3">
         {/* Title, Category & Urdu Name */}
-        <div className="space-y-1.5">
+        <div className="space-y-1">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[10px] uppercase font-bold tracking-widest text-[#c99846]">
               {product.category}
