@@ -16,11 +16,27 @@
     --color-cream-200: #f0e2ca;
   }
 
+  html,
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     background-color: #0d0507;
     color: #fdfaf4;
+    width: 100%;
+    max-width: 100%;
     overflow-x: hidden;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
   }
 
   h1, h2, h3, .font-serif-brand {

@@ -182,7 +182,7 @@ export const AiSupportModal: React.FC = () => {
       {/* Positioned cleanly above the WhatsApp button at bottom-right corner */}
       <aside
         aria-label="AI Customer Support"
-        className="fixed bottom-20 sm:bottom-22 right-6 z-40 print:hidden"
+        className="fixed bottom-18 sm:bottom-22 right-4 sm:right-6 z-40 print:hidden"
       >
         <button
           type="button"
@@ -205,7 +205,7 @@ export const AiSupportModal: React.FC = () => {
       {/* 2. Modern, Compact Chat Window */}
       {isOpen && (
         <div
-          className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] h-[480px] max-h-[82vh] bg-[#150509]/98 backdrop-blur-xl border border-[#c99846]/50 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-slide-up"
+          className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 left-4 sm:left-auto z-50 w-auto sm:w-[380px] max-w-[calc(100%-2rem)] sm:max-w-none h-[480px] max-h-[82vh] bg-[#150509]/98 backdrop-blur-xl border border-[#c99846]/50 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-slide-up"
           role="dialog"
           aria-labelledby="ai-chat-header"
         >

@@ -6,8 +6,8 @@ export const ReviewsSection: React.FC = () => {
   const { settings } = useStore();
 
   return (
-    <section className="py-16 bg-[#140508] border-t border-[#c99846]/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-16 bg-[#140508] border-t border-[#c99846]/20 w-full max-w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="max-w-4xl mx-auto bg-gradient-to-br from-[#230810] to-[#140508] border border-[#c99846]/35 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8">
           {/* Header */}
           <div className="text-center space-y-2">

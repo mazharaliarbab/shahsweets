@@ -22,8 +22,8 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#0b0305] border-t border-[#c99846]/25 text-[#f8f1e3] pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-[#0b0305] border-t border-[#c99846]/25 text-[#f8f1e3] pt-16 pb-12 w-full max-w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-[#c99846]/15">
           {/* Brand Info & Real Logo */}
           <div className="lg:col-span-5 space-y-4">

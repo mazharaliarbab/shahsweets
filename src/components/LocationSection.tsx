@@ -11,8 +11,8 @@ export const LocationSection: React.FC = () => {
   const whatsAppDigits = (settings.whatsAppNumber || '+92 305 9898409').replace(/[^0-9]/g, '') || '923059898409';
 
   return (
-    <section id="location" className="py-20 bg-[#0d0406] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="location" className="py-20 bg-[#0d0406] relative w-full max-w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left Column: Location Details */}
           <div className="lg:col-span-6 space-y-6">

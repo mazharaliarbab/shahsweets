@@ -27,7 +27,7 @@ export const WhatsAppFloatingButton: React.FC = () => {
       {/* Strict size: 48x48px on mobile, max 52x52px on larger screens */}
       <aside
         aria-label="Contact options"
-        className="fixed bottom-6 right-6 z-40 print:hidden"
+        className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-40 print:hidden"
       >
         <a
           href={linkData.url}

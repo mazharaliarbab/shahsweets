@@ -15,15 +15,15 @@ export const CategoriesSection: React.FC = () => {
     }
   };
 
-  // Direction offsets for category cards: left, bottom, right
+  // Direction offsets for category cards (vertical only to prevent mobile horizontal overflow)
   const cardDirections = [
-    { x: -35, y: 15 },
+    { x: 0, y: 25 },
     { x: 0, y: 35 },
-    { x: 35, y: 15 },
+    { x: 0, y: 25 },
   ];
 
   return (
-    <section className="py-16 bg-[#110507] border-y border-[#c99846]/20">
+    <section className="py-16 bg-[#110507] border-y border-[#c99846]/20 overflow-hidden w-full max-w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">

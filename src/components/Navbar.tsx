@@ -199,9 +199,9 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-[#16060a]/95 backdrop-blur-md border-b border-[#c99846]/25 shadow-xl transition-all">
+      <header className="sticky top-0 z-40 bg-[#16060a]/95 backdrop-blur-md border-b border-[#c99846]/25 shadow-xl transition-all w-full max-w-full overflow-x-clip">
         {/* Main Navigation Bar — First visible section (Top info bar removed per instruction) */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full">
           <div className="flex items-center justify-between h-20 gap-2">
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               {/* 1. Logo & Restored Brand Name Beside Logo */}

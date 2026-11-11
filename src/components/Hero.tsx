@@ -23,7 +23,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section id="home" className="relative overflow-hidden pt-8 pb-16 lg:pt-16 lg:pb-24 bg-gradient-to-b from-[#140508] via-[#1c070c] to-[#0e0406]">
+    <section id="home" className="relative overflow-hidden pt-8 pb-16 lg:pt-16 lg:pb-24 bg-gradient-to-b from-[#140508] via-[#1c070c] to-[#0e0406] w-full max-w-full">
       {/* Subtle Background Glows */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[#6d192c]/20 blur-[140px] pointer-events-none rounded-full" />
       <div className="absolute top-10 right-10 w-[300px] h-[300px] bg-[#c99846]/10 blur-[100px] pointer-events-none rounded-full" />
@@ -90,18 +90,18 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* Quick highlights */}
-            <div className="pt-6 border-t border-[#c99846]/20 grid grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0 text-left">
-              <div className="bg-[#1f070e]/60 border border-[#c99846]/20 rounded-xl p-3">
-                <div className="text-[#e8c86a] font-crest text-lg sm:text-xl font-bold">100% Pure</div>
-                <div className="text-[11px] sm:text-xs text-[#f8f1e3]/70">Khoya &amp; Desi Ghee</div>
+            <div className="pt-6 border-t border-[#c99846]/20 grid grid-cols-3 gap-2 sm:gap-4 max-w-lg mx-auto lg:mx-0 text-left w-full">
+              <div className="bg-[#1f070e]/60 border border-[#c99846]/20 rounded-xl p-2 sm:p-3 overflow-hidden">
+                <div className="text-[#e8c86a] font-crest text-sm sm:text-xl font-bold truncate">100% Pure</div>
+                <div className="text-[10px] sm:text-xs text-[#f8f1e3]/70 truncate">Khoya &amp; Desi Ghee</div>
               </div>
-              <div className="bg-[#1f070e]/60 border border-[#c99846]/20 rounded-xl p-3">
-                <div className="text-[#e8c86a] font-crest text-lg sm:text-xl font-bold">Daily Fresh</div>
-                <div className="text-[11px] sm:text-xs text-[#f8f1e3]/70">Morning &amp; Evening Batches</div>
+              <div className="bg-[#1f070e]/60 border border-[#c99846]/20 rounded-xl p-2 sm:p-3 overflow-hidden">
+                <div className="text-[#e8c86a] font-crest text-sm sm:text-xl font-bold truncate">Daily Fresh</div>
+                <div className="text-[10px] sm:text-xs text-[#f8f1e3]/70 truncate">Fresh Batches</div>
               </div>
-              <div className="bg-[#1f070e]/60 border border-[#c99846]/20 rounded-xl p-3">
-                <div className="text-[#e8c86a] font-crest text-lg sm:text-xl font-bold">10:00 PM</div>
-                <div className="text-[11px] sm:text-xs text-[#f8f1e3]/70">Open Daily in Shabqadar</div>
+              <div className="bg-[#1f070e]/60 border border-[#c99846]/20 rounded-xl p-2 sm:p-3 overflow-hidden">
+                <div className="text-[#e8c86a] font-crest text-sm sm:text-xl font-bold truncate">10:00 PM</div>
+                <div className="text-[10px] sm:text-xs text-[#f8f1e3]/70 truncate">Open Daily</div>
               </div>
             </div>
           </div>

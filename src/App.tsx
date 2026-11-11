@@ -27,10 +27,10 @@ const MainLayout: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d0507] text-[#fdfaf4] flex flex-col selection:bg-[#c99846] selection:text-[#180a0d]">
+    <div className="min-h-screen bg-[#0d0507] text-[#fdfaf4] flex flex-col selection:bg-[#c99846] selection:text-[#180a0d] w-full max-w-full overflow-x-hidden">
       <Navbar />
 
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-full overflow-x-hidden">
         {/* 1. Hero Section */}
         <Hero />
 

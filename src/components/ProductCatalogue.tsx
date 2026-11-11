@@ -46,8 +46,8 @@ export const ProductCatalogue: React.FC = () => {
   });
 
   return (
-    <section id="products" className="py-16 sm:py-24 bg-[#0d0507]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section id="products" className="py-12 sm:py-20 lg:py-24 bg-[#0d0507] w-full max-w-full overflow-hidden">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 w-full max-w-full">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-[#c99846]">
@@ -63,9 +63,9 @@ export const ProductCatalogue: React.FC = () => {
         </div>
 
         {/* Filter Controls Bar */}
-        <div className="max-w-5xl mx-auto w-full bg-[#17060a] border border-[#c99846]/25 rounded-2xl p-4 sm:p-5 shadow-xl space-y-4">
+        <div className="max-w-5xl mx-auto w-full bg-[#17060a] border border-[#c99846]/25 rounded-2xl p-3 sm:p-5 shadow-xl space-y-3 sm:space-y-4 overflow-hidden">
           {/* Top row: Categories pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none w-full max-w-full">
             <button
               onClick={() => setSelectedCategory('all')}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all cursor-pointer ${
@@ -147,19 +147,19 @@ export const ProductCatalogue: React.FC = () => {
           </div>
         </div>
 
-        {/* Product Cards Grid - Exactly 2 columns on desktop/landscape & tablet, 1 column on mobile portrait */}
+        {/* Product Cards Grid - 2 columns on mobile (2x2 grid visible in mobile screen), 2 columns on desktop/tablet */}
         {sortedProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-5 md:gap-6 max-w-5xl mx-auto w-full">
             {sortedProducts.map((product, index) => (
               <motion.div
                 key={product.id}
                 className="h-full flex flex-col"
-                initial={{ opacity: 0, y: 22 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.12 }}
+                viewport={{ once: true, amount: 0.08 }}
                 transition={{
-                  duration: 0.45,
-                  delay: Math.min((index % 2) * 0.08, 0.35),
+                  duration: 0.4,
+                  delay: Math.min((index % 2) * 0.06, 0.25),
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >

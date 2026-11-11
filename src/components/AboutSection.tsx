@@ -14,13 +14,13 @@ export const AboutSection: React.FC = () => {
   const { settings } = useStore();
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-b from-[#0d0507] via-[#16060a] to-[#120508] relative overflow-hidden">
+    <section id="about" className="py-20 bg-gradient-to-b from-[#0d0507] via-[#16060a] to-[#120508] relative overflow-hidden w-full max-w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Brand Emblem & Visuals - Animation 4: Animates smoothly from left */}
+          {/* Left Column: Brand Emblem & Visuals - Animation 4: Smooth vertical fade */}
           <motion.div
-            initial={{ opacity: 0, x: -45 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-5 flex flex-col items-center justify-center text-center"
@@ -46,10 +46,10 @@ export const AboutSection: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Right Column: Authentic Story, Values & Social Promotion - Animation 4: Animates smoothly from right */}
+          {/* Right Column: Authentic Story, Values & Social Promotion - Animation 4: Smooth vertical fade */}
           <motion.div
-            initial={{ opacity: 0, x: 45 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-7 space-y-6"
